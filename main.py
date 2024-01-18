@@ -19,6 +19,11 @@ def main_menu(screen):
     play_button = pg.Rect(50, 200, 200, 50)
     close_button = pg.Rect(50, 300, 200, 50)
 
+    level_buttons = [
+        pg.Rect(50, 400, 200, 50),  # Level 1
+        pg.Rect(50, 500, 200, 50),  # Level 2
+    ]
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -26,10 +31,13 @@ def main_menu(screen):
                 quit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if play_button.collidepoint(event.pos):
-                    return True
+                    return True, 1  # Start the game with Level 1 by default
                 elif close_button.collidepoint(event.pos):
                     pg.quit()
                     quit()
+                for i, level_button in enumerate(level_buttons):
+                    if level_button.collidepoint(event.pos):
+                        return True, i + 1  # Start the game with the selected level
 
         screen.fill(BG_RGB)
         pg.draw.rect(screen, (0, 255, 0), play_button)
@@ -40,6 +48,11 @@ def main_menu(screen):
 
         screen.blit(play_text, (play_button.x + 50, play_button.y + 15))
         screen.blit(close_text, (close_button.x + 50, close_button.y + 15))
+
+        for i, level_button in enumerate(level_buttons):
+            pg.draw.rect(screen, (0, 0, 255), level_button)
+            level_text = font.render(f"Level {i + 1}", True, (255, 255, 255))
+            screen.blit(level_text, (level_button.x + 50, level_button.y + 15))
 
         pg.display.flip()
 
@@ -55,13 +68,15 @@ def main():
 
     while True:
         if not game_active:
-            game_active = main_menu(screen)
+            game_active, selected_level = main_menu(screen)
             if not game_active:
                 return
 
         player = Player(screen)
         obstacles = []
         next_spawn = random.randint(SPAWN_MIN, SPAWN_MAX)
+
+        obstacle_speed = MIN_SPEED + (selected_level - 1) * 100
 
         while game_active:
             dt = clock.tick(fps) / 1000.0
@@ -75,7 +90,7 @@ def main():
 
             next_spawn -= dt
             if next_spawn <= 0:
-                obstacles.append(Obstacle(screen))
+                obstacles.append(Obstacle(screen, obstacle_speed))
                 next_spawn = random.randint(SPAWN_MIN, SPAWN_MAX)
 
             screen.fill(BG_RGB)
@@ -85,7 +100,7 @@ def main():
             for obstacle in obstacles:
                 if obstacle.rect.right <= 0:
                     obstacles.remove(obstacle)
-                    score += 1  
+                    score += 1
                 obstacle.update_coords(dt)
                 obstacle.show(screen)
 
