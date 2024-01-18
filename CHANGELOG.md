@@ -15,7 +15,7 @@ Um das Spiel benutzerfreundlicher zu gestalten, wurde ein Menü hinzugefügt. Da
 ## 4 Erweiterung: Verschiedene Levels
 Hier habe ich 2 Buttons zum Menü hinzugefügt 1Level und 2Level indenen einfach verschiedene Geschwindigkeiten der Obstacels sind.
 
-## 5 Erweiterung:
+## 5 Erweiterung: Scoreboard
 
 
 
