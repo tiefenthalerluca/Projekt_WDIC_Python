@@ -17,6 +17,19 @@ Hier habe ich 2 Buttons zum Menü hinzugefügt 1Level und 2Level indenen einfach
 
 ## 5 Erweiterung: Scoreboard
 
+## 6 Erweiterung: Laufanimation
+
+Idee: hat aber aus unerklärlichen Dingen nicht funktioniert und es wurde immer nur bild1 angezeigt somit habe ich den Grundcode hierangegeben damit kein Fehler im Code sichtbar ist
+
+
+bilder = ['bild1.png', 'bild2.png', 'bild3.png']
+
+def laufanimation():
+    while True:
+        for bild in bilder:
+            zeige_bild(bild)
+            time.sleep(0.5)
+
 
 ## Link zur originalen Datei: https://github.com/utmgdsc/dino-game
 * ...
