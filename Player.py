@@ -32,7 +32,6 @@ class Player:
     def update_animation(self, dt):
         self.animation_timer += dt
         if self.animation_timer >= self.animation_speed:
-            # Aktualisieren Sie auch die Position des Rechtecks im Verhältnis zur Größenänderung
             current_pos = self.rect.topleft
             self.rect = self.image.get_rect(topleft=current_pos)
 

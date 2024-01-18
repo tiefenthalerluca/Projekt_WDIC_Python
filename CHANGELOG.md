@@ -13,7 +13,9 @@ Um das Spielerlebnis zu verbessern, wurden Bilder für den Spieler eingeführt. 
 Um das Spiel benutzerfreundlicher zu gestalten, wurde ein Menü hinzugefügt. Das Menü enthält zwei Buttons: einen zum Starten des Spiels und einen zum Beenden. Dies bietet eine klare Struktur und verbessert die Spielerführung.
 
 ## 4 Erweiterung: Verschiedene Levels
+Hier habe ich 2 Buttons zum Menü hinzugefügt 1Level und 2Level indenen einfach verschiedene Geschwindigkeiten der Obstacels sind.
 
+## 5 Erweiterung:
 
 
 

@@ -1,3 +1,4 @@
+# main.py
 import random
 import pygame as pg
 from pygame import KEYDOWN
@@ -5,9 +6,9 @@ from pygame import constants
 from Obstacle import Obstacle
 from Player import Player
 from constants import *
+from scoreboard import Scoreboard
 
 game_active = False
-score = 0 
 
 def game_over():
     global game_active
@@ -22,6 +23,7 @@ def main_menu(screen):
     level_buttons = [
         pg.Rect(50, 400, 200, 50),  # Level 1
         pg.Rect(50, 500, 200, 50),  # Level 2
+        
     ]
 
     while True:
@@ -31,13 +33,13 @@ def main_menu(screen):
                 quit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if play_button.collidepoint(event.pos):
-                    return True, 1  # Start the game with Level 1 by default
+                    return True, 1
                 elif close_button.collidepoint(event.pos):
                     pg.quit()
                     quit()
                 for i, level_button in enumerate(level_buttons):
                     if level_button.collidepoint(event.pos):
-                        return True, i + 1  # Start the game with the selected level
+                        return True, i + 1  
 
         screen.fill(BG_RGB)
         pg.draw.rect(screen, (0, 255, 0), play_button)
@@ -66,16 +68,22 @@ def main():
     global game_active
     global score  
 
+    scoreboard = Scoreboard()
+
     while True:
         if not game_active:
             game_active, selected_level = main_menu(screen)
             if not game_active:
                 return
 
+      
+            scoreboard.reset_score()
+
         player = Player(screen)
         obstacles = []
         next_spawn = random.randint(SPAWN_MIN, SPAWN_MAX)
 
+      
         obstacle_speed = MIN_SPEED + (selected_level - 1) * 100
 
         while game_active:
@@ -100,13 +108,14 @@ def main():
             for obstacle in obstacles:
                 if obstacle.rect.right <= 0:
                     obstacles.remove(obstacle)
-                    score += 1
+                    scoreboard.increase_score() 
                 obstacle.update_coords(dt)
                 obstacle.show(screen)
 
             if player.rect.collidelist([obstacle.rect for obstacle in obstacles]) != -1:
                 game_over()
 
+            scoreboard.show(screen)  
             pg.display.update()
 
 if __name__ == "__main__":
